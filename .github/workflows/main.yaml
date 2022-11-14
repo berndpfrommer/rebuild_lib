@@ -1,0 +1,19 @@
+#
+# continuous integration workflow
+#
+name: alert app
+
+on:
+  push:
+    branches: [ master]
+
+jobs:
+  send-request-to-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: |
+          curl -X POST 'https://api.github.com/repos/berndpfrommer/rebuild_app/actions/workflows/rebuild_package.yaml/dispatches' \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -H 'Authorization: Bearer ${{ secrets.RUN_BACKEND_ACTION_TO_DEPLOY }}' \
+          -d '{"ref":"development"}'
