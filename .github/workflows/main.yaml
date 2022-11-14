@@ -1,6 +1,7 @@
 #
 # continuous integration workflow
 #
+
 name: alert app
 
 on:
