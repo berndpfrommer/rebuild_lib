@@ -14,8 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: trigger rebuild of package
-        run: |
-          curl -X POST 'https://api.github.com/repos/berndpfrommer/rebuild_app/actions/workflows/rebuild_package.yaml/dispatches' \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H 'Authorization: Bearer ${{ secrets.PAT_BGP }}' \
-          -d '{"ref":"master"}'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PAT_BGP }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'berndpfrommer',
+              repo: 'rebuild_app',
+              workflow_id: 'rebuild_package.yaml',
+              ref: 'master',
+  	      inputs: {event_type: 'remote_trigger'},
+            })
+#        run: |
+#          curl -X POST 'https://api.github.com/repos/berndpfrommer/rebuild_app/actions/workflows/rebuild_package.yaml/dispatches' \
+#          -H 'Accept: application/vnd.github.everest-preview+json' \
+#          -H 'Authorization: Bearer ${{ secrets.PAT_BGP }}' \
+#          -d '{"ref":"master"}'
