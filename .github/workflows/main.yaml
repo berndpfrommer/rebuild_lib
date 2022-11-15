@@ -9,12 +9,12 @@ on:
     branches: [ master]
 
 jobs:
-  send-request-to-backend:
+  trigger-package-rebuild
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
+      - name: trigger rebuild of package
         run: |
           curl -X POST 'https://api.github.com/repos/berndpfrommer/rebuild_app/actions/workflows/rebuild_package.yaml/dispatches' \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H 'Authorization: Bearer ${{ secrets.RUN_BACKEND_ACTION_TO_DEPLOY }}' \
+          -H 'Authorization: Bearer ${{ secrets.PAT_BGP }}' \
           -d '{"ref":"development"}'
