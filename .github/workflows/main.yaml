@@ -23,7 +23,7 @@ jobs:
               repo: 'rebuild_app',
               workflow_id: 'rebuild_package.yaml',
               ref: 'master',
-              inputs: {event_type: 'remote_trigger'},
+              inputs: {tag: 'test_tag'},
             })
 #        run: |
 #          curl -X POST 'https://api.github.com/repos/berndpfrommer/rebuild_app/actions/workflows/rebuild_package.yaml/dispatches' \
